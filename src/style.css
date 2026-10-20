@@ -1,0 +1,355 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Temas (variáveis) ---------- */
+:root {
+    --fundo: #ffffff;
+    --cartao: #ffffff;
+    --texto: #111111;
+    --texto-2: #222222;
+    --texto-3: #444444;
+    --rotulo: #777777;
+    --linha: #e5e5e5;
+    --linha-forte: #cfcfcf;
+    --destaque: #f2d82e;
+}
+
+:root[data-theme="escuro"] {
+    --fundo: #121214;
+    --cartao: #1b1b21;
+    --texto: #ececec;
+    --texto-2: #d6d6dc;
+    --texto-3: #a9a9b3;
+    --rotulo: #8e8e98;
+    --linha: #2a2a31;
+    --linha-forte: #41414b;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background-color: var(--fundo);
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color .4s ease, color .4s ease;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+/* Transição suave de cor ao trocar de tema */
+.pagina-completa,
+.pagina-completa * {
+    transition: background-color .4s ease, color .4s ease, border-color .4s ease;
+}
+
+.pagina-completa {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 28px 24px;
+}
+
+/* ---------- Botão de tema ---------- */
+.botao-tema {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--linha-forte);
+    background: var(--cartao);
+    color: var(--texto);
+    cursor: pointer;
+    overflow: hidden;
+    animation: aparecer .6s ease .3s both;
+    transition: transform .3s ease, background-color .4s ease, border-color .4s ease, color .4s ease;
+}
+
+.botao-tema:hover {
+    transform: rotate(18deg);
+}
+
+.botao-tema:active {
+    transform: scale(.92);
+}
+
+.botao-tema:focus-visible {
+    outline: 2px solid var(--destaque);
+    outline-offset: 3px;
+}
+
+.icone {
+    grid-area: 1 / 1;
+    width: 20px;
+    height: 20px;
+    transition: opacity .45s ease, transform .6s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+/* Modo claro mostra a lua (convite para escurecer); modo escuro mostra o sol */
+.icone-lua {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+.icone-sol {
+    opacity: 0;
+    transform: rotate(-90deg) scale(.4);
+}
+
+:root[data-theme="escuro"] .icone-lua {
+    opacity: 0;
+    transform: rotate(90deg) scale(.4);
+}
+
+:root[data-theme="escuro"] .icone-sol {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+/* ---------- Cabeçalho ---------- */
+.cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.logo {
+    width: 100px;
+    height: 95px;
+    background-color: var(--destaque);
+    color: #000;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .5s cubic-bezier(.3, 1.5, .6, 1), background-color .4s ease;
+}
+
+.logo:hover {
+    transform: rotate(-6deg) scale(1.06);
+}
+
+.nome h1 {
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+}
+
+.nome h2 {
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    font-weight: normal;
+    color: var(--texto-3);
+}
+
+.descricao p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: var(--texto-2);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+}
+
+/* ---------- Layout ---------- */
+.corpo {
+    display: flex;
+}
+
+.principal {
+    flex: 2;
+    padding-right: 28px;
+}
+
+.direita {
+    flex: 1;
+    padding-left: 28px;
+    border-left: 1px solid var(--linha);
+}
+
+.experiencias h3,
+.educacao h3,
+.contato h3 {
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--rotulo);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.nome_cargo p,
+.categoria_ed p {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--rotulo);
+}
+
+.descricao_cargo p,
+.descricao_ed p {
+    font-size: 12px;
+    color: var(--texto-2);
+}
+
+/* Cartões com barra de destaque que cresce ao passar o mouse */
+.cargo,
+.educacional {
+    position: relative;
+    margin-bottom: 40px;
+    padding-left: 16px;
+}
+
+.cargo::before,
+.educacional::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--linha-forte);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .45s cubic-bezier(.2, .7, .2, 1), background-color .4s ease;
+}
+
+.cargo:hover::before,
+.educacional:hover::before {
+    transform: scaleY(1);
+    background: var(--destaque);
+}
+
+.cargo h4,
+.educacional h4 {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--texto);
+}
+
+.contato {
+    border-top: 1px solid var(--linha);
+    padding-top: 24px;
+}
+
+.contato p {
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: var(--texto-2);
+}
+
+.rodape {
+    border-top: 1px solid var(--linha);
+    margin-top: 24px;
+    padding-top: 24px;
+}
+
+.rodape p {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--rotulo);
+}
+
+/* ---------- Animações de entrada ---------- */
+@keyframes surgir {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes deslizar {
+    from {
+        opacity: 0;
+        transform: translateX(-24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animado {
+    animation: surgir .7s cubic-bezier(.2, .7, .2, 1) both;
+    animation-delay: calc(var(--i, 0) * 120ms);
+}
+
+.cabecalho.animado {
+    animation-name: deslizar;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 720px) {
+    .pagina-completa {
+        padding: 72px 20px 24px;
+    }
+
+    .botao-tema {
+        top: 16px;
+        right: 16px;
+    }
+
+    .cabecalho {
+        gap: 14px;
+    }
+
+    .logo {
+        width: 80px;
+        height: 76px;
+        font-size: 38px;
+    }
+
+    .corpo {
+        flex-direction: column;
+    }
+
+    .principal {
+        padding-right: 0;
+    }
+
+    .direita {
+        flex: none;
+        padding-left: 0;
+        border-left: none;
+        margin-top: 8px;
+    }
+}
+
+/* ---------- Acessibilidade: reduzir movimento ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .animado,
+    .botao-tema {
+        animation: none !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: .01ms !important;
+    }
+}
