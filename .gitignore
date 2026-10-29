@@ -1,0 +1,12 @@
+# dependências e build (o GitHub Actions gera a dist a cada deploy)
+node_modules/
+dist/
+
+# arquivos do sistema operacional
+.DS_Store
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
